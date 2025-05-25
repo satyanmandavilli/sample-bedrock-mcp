@@ -13,7 +13,8 @@ from langgraph.prebuilt import create_react_agent
 from loguru import logger
 from mcp import ClientSession
 from src.utils.bedrock import get_bedrock_client, get_chat_model
-from src.utils.models import InferenceConfig, ModelId, ThinkingConfig
+from src.utils.databricks import get_databricks_client, get_chat_model
+from src.utils.models import InferenceConfig, ModelId, ThinkingConfig, DatabricksModelId
 from typing import cast
 
 
@@ -21,11 +22,12 @@ logger.remove()
 logger.add(sys.stderr, level=os.getenv('LOG_LEVEL', 'ERROR'))
 
 bedrock_client = get_bedrock_client()
+databricks_client = get_databricks_client(host=os.getenv('DATABRICKS_HOST', ''), token=os.getenv('DATABRICKS_TOKEN', ''))
 chat_model = get_chat_model(
-    model_id=ModelId.ANTHROPIC_CLAUDE_3_7_SONNET,
+    model_id=DatabricksModelId.ANTHROPIC_CLAUDE_3_7_SONNET,
     inference_config=InferenceConfig(temperature=1, max_tokens=4096 * 8),
     thinking_config=ThinkingConfig(budget_tokens=1024),
-    client=bedrock_client,
+    client=databricks_client,
 )
 
 

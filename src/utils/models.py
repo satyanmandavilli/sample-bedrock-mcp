@@ -16,6 +16,7 @@ class ThinkingConfig(BaseModel):
 
 
 BOTO3_CLIENT_WARNING = Warning('Boto3 kwargs will be ignored if client is specified')
+DATABRICKS_CLIENT_WARNING = Warning('Host and token will be ignored if client is specified')
 
 
 class InferenceConfig(BaseModel):
@@ -29,3 +30,8 @@ class ModelId(str, Enum):
     """Model IDs for Bedrock."""
 
     ANTHROPIC_CLAUDE_3_7_SONNET = 'anthropic.claude-3-7-sonnet-20250219-v1:0'
+
+
+class DatabricksModelId(str, Enum):
+    """Model IDs for Databricks."""
+    ANTHROPIC_CLAUDE_3_7_SONNET = 'databricks-claude-3-7-sonnet'
